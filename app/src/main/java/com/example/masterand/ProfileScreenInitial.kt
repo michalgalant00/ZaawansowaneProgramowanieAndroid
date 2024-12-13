@@ -13,14 +13,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.masterand.navigation.Screen
 
 @Composable
-fun ProfileScreenInitial() {
+fun ProfileScreenInitial(
+    navController: NavController
+) {
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var colorsNumber by rememberSaveable { mutableStateOf("") }
@@ -32,6 +37,14 @@ fun ProfileScreenInitial() {
             profileImageUri = selectedUri
         }
     )
+
+    // validation booleans
+    var isNameValid by rememberSaveable { mutableStateOf(false) }
+    var isEmailValid by rememberSaveable { mutableStateOf(false) }
+    var isNumberOfColorsValid by rememberSaveable { mutableStateOf(false) }
+
+    // context for toast showing
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -58,17 +71,23 @@ fun ProfileScreenInitial() {
 
         OutlinedTextFieldWithError(
             value = name,
-            onValueChange = { name = it },
+            onValueChange = {
+                name = it
+                isNameValid = it.isNotEmpty() && it.length > 3
+            },
             label = "Enter name",
-            error = "Name can't be empty",
-            isValid = { it.isNotEmpty() }
+            error = "Name can't be empty and must be longer than 3 characters",
+            isValid = { it.isNotEmpty() && it.length > 3 }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextFieldWithError(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = {
+                email = it
+                isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()
+            },
             label = "Enter email",
             error = "Invalid email format",
             isValid = { android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches() },
@@ -79,7 +98,12 @@ fun ProfileScreenInitial() {
 
         OutlinedTextFieldWithError(
             value = colorsNumber,
-            onValueChange = { colorsNumber = it },
+            onValueChange = {
+                colorsNumber = it
+
+                val number = it.toIntOrNull()
+                isNumberOfColorsValid = number != null && number in 5..10
+            },
             label = "Enter number of colors",
             error = "Number must be between 5 and 10",
             isValid = {
@@ -92,7 +116,20 @@ fun ProfileScreenInitial() {
         Spacer(modifier = Modifier.height(40.dp))
 
         Button(
-            onClick = { /* Handle navigation to the next screen */ },
+            onClick = {
+                // debug
+                navController.navigate(route = Screen.ProfileScreen.route)
+
+                // working
+//                if (isNameValid && isEmailValid && isNumberOfColorsValid)
+//                    navController.navigate(route = Screen.ProfileScreen.route)
+//                else
+//                    Toast.makeText(
+//                        context,
+//                        "Please fill in all fields correctly before proceeding.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Next")

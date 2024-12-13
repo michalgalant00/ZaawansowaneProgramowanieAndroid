@@ -14,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.masterand.models.Profile
+import com.example.masterand.navigation.Screen
 
 private val ProfileSaver = listSaver<Profile, Any>(
     save = { profile ->
@@ -39,7 +41,9 @@ private val testusr = Profile(
 )
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    navController: NavController
+) {
     val user by rememberSaveable(stateSaver = ProfileSaver) { mutableStateOf(testusr) }
 
     Column(
@@ -57,7 +61,9 @@ fun ProfileScreen() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { /* Handle navigation to the GameScreen */ },
+                onClick = {
+                    navController.navigate(route = Screen.GameScreen.route)
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Play")
@@ -84,7 +90,9 @@ fun ProfileScreen() {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
-                    onClick = { /* Handle navigation to the ProfileScreenInitial */ }
+                    onClick = {
+                        navController.navigate(route = Screen.ProfileScreenInitial.route)
+                    }
                 ) {
                     Text(text = "Log out")
                 }
