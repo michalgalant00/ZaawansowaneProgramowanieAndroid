@@ -12,7 +12,9 @@ import com.example.masterand.ProfileScreenInitial
 fun SetupNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "profile-screen-initial"
+        // debug gamescreen
+//        startDestination = "profile-screen-initial"
+        startDestination = "game-screen"
     ) {
         composable(route = Screen.ProfileScreenInitial.route) {
             ProfileScreenInitial(navController = navController)
@@ -23,7 +25,10 @@ fun SetupNavGraph(navController: NavHostController) {
         }
 
         composable(route = Screen.GameScreen.route) {
-            GameScreen(navController = navController)
+            GameScreen(navController = navController,
+                //debug
+                numberOfColors = 5
+            )
         }
     }
 }

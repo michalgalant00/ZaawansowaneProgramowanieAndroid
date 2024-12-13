@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             MasterAndTheme {
                 navController = rememberNavController()
-
                 SetupNavGraph(navController = navController)
             }
         }
