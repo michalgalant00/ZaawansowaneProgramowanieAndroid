@@ -30,6 +30,13 @@ import com.example.masterand.components.ProfileImageWithPicker
 import com.example.masterand.navigation.Screen
 import com.example.masterand.viewmodels.LoginViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.scale
 
 @Composable
 fun LoginScreen(
@@ -59,6 +66,16 @@ fun LoginScreen(
     // coroutine scope for suspended functions
     val coroutineScope = rememberCoroutineScope()
 
+    val infiniteTransition = rememberInfiniteTransition()
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.9f,
+        targetValue = 1.1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +86,8 @@ fun LoginScreen(
         Text(
             text = "MasterAnd",
             fontSize = 56.sp,
-            color = Color.Black
+            color = Color.Black,
+            modifier = Modifier.scale(scale)
         )
 
         Spacer(modifier = Modifier.height(24.dp))

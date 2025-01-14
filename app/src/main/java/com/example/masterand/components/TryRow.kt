@@ -28,6 +28,7 @@ fun TryRow(
     var isSubmitted by remember { mutableStateOf(false) }
     var showColorPicker by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(-1) }
+    var isWaveAnimating by remember { mutableStateOf(false) }
 
     if (showColorPicker) {
         ColorPickerModal(
@@ -58,7 +59,9 @@ fun TryRow(
                         selectedIndex = index
                         showColorPicker = true
                     }
-                }
+                },
+                waveDelay = index * 100, // Delay each circle's wave by 100ms
+                isWaveAnimating = isWaveAnimating
             )
         }
 
@@ -67,6 +70,7 @@ fun TryRow(
             ConfirmButton(
                 modifier = Modifier,
                 onClick = {
+                    isWaveAnimating = true
                     feedback = onTrySubmitted(colors)
                     isSubmitted = true
                 }
