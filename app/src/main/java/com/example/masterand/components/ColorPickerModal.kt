@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.masterand.views.FEEDBACK_CIRCLE_SIZE
 import com.example.masterand.types.GameColor
 
+
 @Composable
 fun ColorPickerModal(
     onDismiss: () -> Unit,
@@ -33,8 +34,8 @@ fun ColorPickerModal(
         title = { Text(text = "Choose color") },
         text = {
             Column {
-                GameColor.entries
-                    .filter { it != GameColor.NONE && it !in usedColors }
+                GameColor.getAvailableColors()
+                    .filter { it !in usedColors }
                     .forEach { color ->
                         Row(
                             modifier = Modifier

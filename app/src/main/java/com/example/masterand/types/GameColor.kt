@@ -31,9 +31,19 @@ enum class GameColor {
     }
 
     companion object {
-        fun getGameSequence(): List<GameColor> {
-            return entries
+        private var availableColors: List<GameColor> = emptyList()
+
+        fun initializeAvailableColors(numberOfColors: Int) {
+            availableColors = entries
                 .filter { it != NONE }
+                .shuffled()
+                .take(numberOfColors)
+        }
+
+        fun getAvailableColors(): List<GameColor> = availableColors
+
+        fun getGameSequence(): List<GameColor> {
+            return availableColors
                 .shuffled()
                 .take(4)
         }

@@ -34,7 +34,7 @@ fun GameScreen(
     numberOfColors: Int
 ) {
     LaunchedEffect(Unit) {
-        viewModel.startNewGame()
+        viewModel.startNewGame(numberOfColors)
     }
 
     val coroutineScope = rememberCoroutineScope()
@@ -61,18 +61,10 @@ fun GameScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Game(
-                numberOfColors = numberOfColors,
                 gameSequence = gameSequence,
                 onTryComplete = { isWin ->
-                    viewModel.onTryComplete(isWin)
-                    if (isWin) {
-                        coroutineScope.launch {
-                            viewModel.saveScore(
-                                email = email,
-                                score = tryCounter,
-                                numberOfColors = numberOfColors
-                            )
-                        }
+                    coroutineScope.launch {
+                        viewModel.onTryComplete(isWin, email, numberOfColors)
                     }
                 }
             )

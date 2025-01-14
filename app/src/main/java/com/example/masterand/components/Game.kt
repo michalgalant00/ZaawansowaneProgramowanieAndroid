@@ -15,7 +15,6 @@ import com.example.masterand.types.GameColor
 
 @Composable
 fun Game(
-    numberOfColors: Int,
     gameSequence: List<GameColor>,
     onTryComplete: (Boolean) -> Unit
 ) {

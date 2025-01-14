@@ -19,12 +19,15 @@ class GameViewModel(
         gameSequence.value = GameColor.getGameSequence()
     }
 
-    fun onTryComplete(isWin: Boolean) {
+    suspend fun onTryComplete(isWin: Boolean, email: String, numberOfColors: Int) {
         tryCounter.intValue++
         isGameWon.value = isWin
+
+        if (isWin)
+            saveScore(email, tryCounter.intValue, numberOfColors)
     }
 
-    suspend fun saveScore(email: String, score: Int, numberOfColors: Int) {
+    private suspend fun saveScore(email: String, score: Int, numberOfColors: Int) {
         val scoreToSave = Score(
             email = email,
             numberOfColors = numberOfColors,
@@ -34,8 +37,9 @@ class GameViewModel(
         scoreRepository.insertScore(scoreToSave)
     }
 
-    fun startNewGame() {
+    fun startNewGame(numberOfColors: Int) {
         resetViewModel()
+        GameColor.initializeAvailableColors(numberOfColors)
         generateGameSequence()
     }
 
