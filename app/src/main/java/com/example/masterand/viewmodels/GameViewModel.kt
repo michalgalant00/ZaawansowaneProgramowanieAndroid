@@ -6,8 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.example.masterand.models.Score
 import com.example.masterand.repositories.ScoreRepository
 import com.example.masterand.types.GameColor
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GameViewModel(
+@HiltViewModel
+class GameViewModel @Inject constructor (
     private val scoreRepository: ScoreRepository
 ) : ViewModel() {
 

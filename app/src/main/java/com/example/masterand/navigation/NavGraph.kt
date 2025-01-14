@@ -1,27 +1,27 @@
 package com.example.masterand.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.masterand.MasterAndApplication
-import com.example.masterand.viewmodels.*
-import com.example.masterand.views.*
+import com.example.masterand.viewmodels.GameViewModel
+import com.example.masterand.viewmodels.LoginViewModel
+import com.example.masterand.viewmodels.ProfileViewModel
+import com.example.masterand.viewmodels.ResultsViewModel
+import com.example.masterand.views.GameScreen
+import com.example.masterand.views.LoginScreen
+import com.example.masterand.views.ProfileScreen
+import com.example.masterand.views.ResultsScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
-    val loginViewModel: LoginViewModel =
-        viewModel(factory = MasterAndApplication.AppViewModelProvider.Factory)
-    val profileViewModel: ProfileViewModel =
-        viewModel(factory = MasterAndApplication.AppViewModelProvider.Factory)
-    val gameViewModel: GameViewModel =
-        viewModel(factory = MasterAndApplication.AppViewModelProvider.Factory)
-    val resultsViewModel: ResultsViewModel =
-        viewModel(factory = MasterAndApplication.AppViewModelProvider.Factory)
-
+    val loginViewModel: LoginViewModel = hiltViewModel()
+    val profileViewModel: ProfileViewModel = hiltViewModel()
+    val gameViewModel: GameViewModel = hiltViewModel()
+    val resultsViewModel: ResultsViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,

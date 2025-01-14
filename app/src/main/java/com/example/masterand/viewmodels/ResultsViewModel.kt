@@ -5,8 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.masterand.models.ProfileWithScore
 import com.example.masterand.repositories.ProfileWithScoreRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ResultsViewModel(
+@HiltViewModel
+class ResultsViewModel @Inject constructor (
     private val profileWithScoreRepository: ProfileWithScoreRepository
 ) : ViewModel() {
 
@@ -15,9 +18,10 @@ class ResultsViewModel(
     var expanded = mutableStateOf(false)
     val availableNumbers = listOf(5, 6, 7, 8, 9, 10)
 
-    suspend fun getProfilesWithScores(selectedNumber: Int) {
+    private suspend fun getProfilesWithScores(selectedNumber: Int) {
         profilesWithScores.value =
             profileWithScoreRepository.getProfilesWithScores(selectedNumber)
+                .sortedBy { it.scoreValue }
     }
 
     suspend fun onNumberSelected(number: Int) {
@@ -36,9 +40,8 @@ class ResultsViewModel(
     }
 
     fun resetViewModel() {
-        var profilesWithScores = mutableStateOf<List<ProfileWithScore>>(emptyList())
-        var selectedNumber = mutableIntStateOf(5)
-        var expanded = mutableStateOf(false)
-        val availableNumbers = listOf(5, 6, 7, 8, 9, 10)
+        profilesWithScores = mutableStateOf<List<ProfileWithScore>>(emptyList())
+        selectedNumber = mutableIntStateOf(5)
+        expanded = mutableStateOf(false)
     }
 }

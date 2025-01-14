@@ -4,17 +4,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.masterand.models.Profile
 import com.example.masterand.repositories.ProfileRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel(
+@HiltViewModel
+class ProfileViewModel @Inject constructor (
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
-    val profile = mutableStateOf<Profile?>(null)
+    var profile = mutableStateOf<Profile?>(null)
 
     suspend fun loadProfile(email: String) {
         profile.value = profileRepository.getProfileByEmail(email)
     }
 
     fun resetViewModel() {
-        val profile = mutableStateOf<Profile?>(null)
+        profile = mutableStateOf<Profile?>(null)
     }
 }

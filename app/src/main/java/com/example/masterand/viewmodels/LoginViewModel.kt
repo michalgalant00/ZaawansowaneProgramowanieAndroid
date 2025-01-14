@@ -6,8 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.masterand.models.Profile
 import com.example.masterand.repositories.ProfileRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor (
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
 
