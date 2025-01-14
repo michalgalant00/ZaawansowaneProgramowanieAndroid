@@ -28,8 +28,7 @@ fun SetupNavGraph(navController: NavHostController) {
         startDestination = Screen.LoginScreen.route
     ) {
         composable(route = Screen.LoginScreen.route) {
-            // todo formularz tez ma sie resetowac
-//            loginViewModel.resetForm()
+            loginViewModel.resetForm()
             profileViewModel.resetViewModel()
             gameViewModel.resetViewModel()
             resultsViewModel.resetViewModel()

@@ -26,15 +26,11 @@ abstract class MasterAndDatabase : RoomDatabase() {
         private var Instance: MasterAndDatabase? = null
 
         fun getDatabase(context: Context): MasterAndDatabase {
-            // ręcznie usuwam starą bazę todo usunąć
-//            context.deleteDatabase(DB_NAME)
-
             return Room.databaseBuilder(
                 context,
                 MasterAndDatabase::class.java,
                 DB_NAME
             )
-//                .fallbackToDestructiveMigration() // usuwa stary schemat bazy i tworzy nowy todo usunąć
                 .build().also { Instance = it }
         }
     }

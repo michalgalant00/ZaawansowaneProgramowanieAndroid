@@ -18,8 +18,4 @@ class ProfileRepositoryImpl(
     override suspend fun getProfileByEmail(email: String): Profile {
         return profileDao.getProfileByEmail(email)
     }
-
-    override suspend fun getAllProfiles(): List<Profile> {
-        return profileDao.getAllProfiles()
-    }
 }

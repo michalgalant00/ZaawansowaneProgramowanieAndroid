@@ -29,11 +29,9 @@ fun ProfileScreen(
 ) {
     LaunchedEffect(email) {
         viewModel.loadProfile(email)
-        viewModel.loadAllProfiles()
     }
 
     val profile = viewModel.profile.value
-    val allProfiles = viewModel.allProfiles.value
 
     Column(
         modifier = Modifier
@@ -103,23 +101,6 @@ fun ProfileScreen(
             }
         } ?: run {
             CircularProgressIndicator()
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Text(text = "My results")
-
-        // todo zamienic na wyniki
-        allProfiles.let {
-            Column {
-                it.forEach { p ->
-                    Text(
-                        text = "id: ${p.id} login: ${p.login} email: ${p.email}\n" +
-                                "desc: ${p.description}\n" +
-                                "picture: ${p.picture}"
-                    )
-                }
-            }
         }
     }
 }
